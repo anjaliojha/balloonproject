@@ -1,17 +1,26 @@
 var ball;
 var database;
 var position;
+
+function preload(){
+    backGroundImage=loadImage("Hot Air Ballon-01.png")
+    balloonImage=loadImage("Hot Air Ballon-02.png");
+}
 function setup(){
-    createCanvas(500,500);
+
+    createCanvas(800,600);
     database=firebase.database();
     ball = createSprite(250,250,10,10);
-    ball.shapeColor = "red";
+
+   // ball.shapeColor = "red";
+    ball.addImage(balloonImage);
+    ball.scale=0.5;
     ballPosition=database.ref("ball/position");
     ballPosition.on("value",readPosition,showError);
 }
 
 function draw(){
-    background("white");
+    background(backGroundImage);
     if(position!==undefined){
     if(keyDown(LEFT_ARROW)){
         writePosition(-1,0);
@@ -27,7 +36,7 @@ function draw(){
     }
     drawSprites();
 }
-    k}
+}
 
 function writePosition(x,y){
 database.ref("ball/position").set({
